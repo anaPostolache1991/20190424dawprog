@@ -35,65 +35,33 @@ public class ejercicio2 {
              o se introduce más de un dato por línea, lanzando en ambos casos una checked exception llamada datosIncorrectosException
               con el mensaje que corresponda.
 		 */
-		/*
-     Scanner myObj = new Scanner(System.in);
 		
-		try {
-			
-			System.out.println("Introduce el 1º número entero >1");
-			Integer n = myObj.nextInt();
-			
-			System.out.println("Introduce el 2º número entero >1");
-			Integer m = myObj.nextInt();
-			
-			if(n<2||m<2) {
-				throw new InputMismatchException();
-			}
-			
-			System.out.println("Los números que has introducidos son "+n+" y " + m);
-			}
-		catch( InputMismatchException e) {
-			// Finalizamos sin mostrar ningun resultado
-//			System.err.println("Introducir datos númericos/ números enteros mayores que 1");
-		}
-
-	*/
+     
 		
-		BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
-		int n=0;
+		List<Integer> lista = new ArrayList<Integer>();
+		List<Integer> listaPrimerNumero = new ArrayList<Integer>();
+		List<Integer> listaPrimerSegundo = new ArrayList<Integer>();
+	    int n=0;
+	    String[] a;
 	   int cont=0;
 		do {
-			//try {
-				//System.out.println("Introduce 2 numeros mayores que 1");
-				
-				//n=Integer.valueOf(bf.readLine());
+			
 			System.out.println(">");
-			
-			
 			Scanner sc=new Scanner(System.in);
-			n=sc.nextInt();
 			
+			
+		    
+			a=sc.nextLine().split(" ");
 		
-			List<Integer> lista = new ArrayList<Integer>();
-			Set<Integer> hash = new HashSet<Integer>(lista);
-			Set<Integer> tree = new TreeSet<Integer>(lista);
-			lista.add(n);
-			mostrarColeccion(lista);
-			mostrarColeccion(hash);
-		
-			mostrarColeccion(tree);
-			//} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				//System.out.println("se esperava 2 numeros");
-				
-			//} 
-		}while(n==1);
-		
-	    List<Integer> lista = new ArrayList<Integer>();
-		Set<Integer> hash = new HashSet<Integer>(lista);
-		Set<Integer> tree = new TreeSet<Integer>(lista);
-		mostrarColeccion(lista);
-		
+	}while(n!=0);
+		//int numEntero = Integer.parseInt(cadena);
+		for(String s:a) {
+			int numEntero = Integer.parseInt(s);
+			System.out.println(numEntero);
+			for(int i=0;i<numEntero;i++) {
+				//int[]primero=numeroEntero;
+			}
+		}
 	}
 	
 	

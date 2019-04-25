@@ -8,32 +8,33 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-
-
-public class ejercicio3 {
-
+public class ej3 {
+	static Map<String, String> mapaIp = new HashMap<>();
+	static Map<String, String> mapaMesaje = new HashMap<>();
+	Map<String, String> mapaUsuario = new HashMap<>();
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		Map<String, String> mapaIp = new HashMap<>();
-		Map<String, String> mapaMesaje = new HashMap<>();
-		Map<String, String> mapaUsuario = new HashMap<>();
+	
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		boolean fin = false;
+		String usuario=null;
+		int numeroMensajes=0;
+		int numeroips=0;
 		do {
 			System.out.print("> ");
 			Scanner s = new Scanner(in.readLine());
 			int estado = 0;
 			String token;
-			String usuario = null;
+			
 		     
-			while (estado != 6) {
+			while (estado != 7) {
 				switch (estado) {
 				case 0:
 					try {
 						//IP=(dirección ip) mensaje=(texto del mensaje) usuario=(nombre de usuario)
 						token = s.skip("fin|ip|mensaje|usuario|\\p{L}+(\\s+\\p{L}+)*" ).match().group();
 						if (token.equals("fin")) {
-							estado = 6;
+							estado = 7;
 							fin = true;
 						}
 						else if (token.equals("ip"))
@@ -41,14 +42,14 @@ public class ejercicio3 {
 						else if (token.equals("mensaje"))
 							estado = 1;
 						else if (token.equals("usuario"))
-							estado = 1;
+							estado = 3;
 						else {
 							usuario = token;
 							estado = 1;
 						}
 					} catch (NoSuchElementException e) {
 						System.out.println("Se esperaba 'buscar' o 'fin' o un nombre");
-						estado = 6;
+						estado = 7;
 					}
 					break;
 				case 1:
@@ -58,7 +59,7 @@ public class ejercicio3 {
 						
 					}catch (NoSuchElementException e) {
 						System.out.println("Se esperaba '='");
-						estado = 6;
+						estado = 7;
 					}
 					break;
 				case 2:
@@ -67,71 +68,112 @@ public class ejercicio3 {
 						estado = 4;
 					}catch (NoSuchElementException e) {
 						System.out.println("Se esperaba '='");
-						estado = 6;
+						estado = 7;
 					}
 					break;
 				case 3:
 					try {
-						token = s.skip("\\d{9}").match().group();
-						mapaIp.put(usuario, token);
+						s.skip("=");
 						estado = 6;
 					}catch (NoSuchElementException e) {
-						System.out.println("Se esperaba un teléfono");
-						estado = 6;
+						System.out.println("Se esperaba '='");
+						estado = 7;
 					}
 					break;
 				case 4:
 					try {
+						
+					
 						token = s.skip("\\d").match().group();
 						String direcionIp = mapaIp.get(token);
 							
 						if(direcionIp==null) {
-							mapaMesaje.put(token, direcionIp);
+							mapaIp.put("numero de ips",token);
 							System.out.println("se insero");
-							mapaIp.put(token,direcionIp);
+							numeroips++;
+							estado=7;
+							fin=true;
 						}else {
 							System.out.println("no se insero");
 							
 						}
 						
-						estado=6;
+						estado = 7;
 					} catch (NoSuchElementException e) {
 						System.out.println("Se esperaba una direcion ip");
-						estado = 6;
+						estado = 7;
 					}
 					break;
 				case 5:
 					try {
 						token = s.skip("\\p{L}+(\\s+\\p{L}+)*").match().group();
 						String mesaje=mapaMesaje.get(token);
-						
-							mapaMesaje.put(token, mesaje);
-						System.out.println(mapaMesaje);
 						if(mesaje==null) {
-							mapaMesaje.put(token, mesaje);
+							mapaMesaje.put("mensaje", token);
 							System.out.println("se insero");
+							numeroMensajes++;
+							
 							fin=true;
-							estado=6;
+							estado = 7;
 						}else {
 							System.out.println("no se insero");
 							fin=true;
-							estado=6;
+							estado = 7;
 							
 						}
-						estado = 6;
+						estado = 7;
 						fin=true;
 					} catch (NoSuchElementException e) {
-						System.out.println("Se esperaba un mensaje o nombre");
-						estado = 6;
+						System.out.println("Se esperaba un mensaje ");
+						estado = 7;
+						fin=true;
 					}
+					break;
+				case 6:try {
+					int cont=0;
+					token = s.skip("\\p{L}+(\\s+\\p{L}+)*").match().group();
+					String nombre=mapaMesaje.get(token);
+					
+					
+					if(nombre==null) {
+						mapaMesaje.put("usuario",token);
+						System.out.println("se insero");
+						fin=true;
+						estado = 7;
+					}else {
+						System.out.println("no se insero");
+						fin=true;
+						estado = 7;
+						
+					}
+					estado = 7;
+					fin=true;
+					
+					
+				
+						
+					
+				} catch (NoSuchElementException e) {
+					System.out.println("Se esperaba un  nombre");
+					estado = 7;
+					fin=true;
+				}
 					break;
 				}
 			}
 		} while (!fin);
-	
-System.out.println(mapaMesaje);
-System.out.println(mapaMesaje);
+		fin=true;
+		
+			
+			
 
-}
+System.out.println("nmbre usuario");		
+System.out.println(mapaMesaje);
+//IP => número de mensajes
+//Número de IPs: número
+System.out.println("Número de IPs"+" "+numeroips);
+//Total de mensajes: número
+System.out.println("Total de mensajes:"+" "+numeroMensajes);
+	}
 	
 }
